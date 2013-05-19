@@ -1,0 +1,15 @@
+# Esses aqui não farão parte dos commits:
+
+*.class
+*.jar
+.settings/
+target/
+.classpath
+.project
+cc_java_swing_db/
+derby.log
+
+# Ignore . and ~ files except .gitignore #
+*~
+.*
+!/.gitignore
