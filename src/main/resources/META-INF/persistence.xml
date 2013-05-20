@@ -7,6 +7,9 @@
 	<persistence-unit name="cc_java_swing_pu" transaction-type="RESOURCE_LOCAL">
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
+	        <property name="javax.persistence.jdbc.url" value="jdbc:derby:cc_java_swing_db;create=true"></property>
+            <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"></property>
+    
 			<property name="eclipselink.logging.level" value="FINE"/>
 		</properties>
 	</persistence-unit>
