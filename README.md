@@ -1,6 +1,4 @@
 cc_java_swing
 =============
 
-JDBC, Derby, Java Swing.
-
-
+JPA com eclipseLink, Derby, Java Swing.

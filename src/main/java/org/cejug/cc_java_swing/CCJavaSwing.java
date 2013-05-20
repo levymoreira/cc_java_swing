@@ -1,7 +1,6 @@
 package org.cejug.cc_java_swing;
 
-import org.cejug.cc_java_swing.jdbc.CCJavaSwingJDBC;
-
+import javax.swing.SwingUtilities;
 
 /**
  * Classe principal para inciar o sistema.
@@ -18,9 +17,12 @@ public class CCJavaSwing {
      */
     public static void main(String... args) {
 
-        
-        CCJavaSwingJDBC ccJavaSwingJDBC = new CCJavaSwingJDBC();
-        System.out.println(ccJavaSwingJDBC.listarPersonagens());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                
+            }
+        });
   
     }
 
