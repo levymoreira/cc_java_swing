@@ -3,9 +3,8 @@ package org.cejug.cc_java_swing;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.SwingUtilities;
-
 import org.cejug.cc_java_swing.persistence.PersistenceManager;
+import org.cejug.cc_java_swing.ui.PersonagemUI;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 
 /**
@@ -35,13 +34,9 @@ public class CCJavaSwing {
         // Criar o entityManager para gerar o banco e já servir de instância única no sistema.
         PersistenceManager.INSTANCE.getEntityManager(persistenceUnitProperties);
         
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                
-            }
-        });
-  
+        // Cria a parte visual jFrame componentes etc...
+        new PersonagemUI();
+        
     }
 
 }

@@ -1,5 +1,7 @@
 package org.cejug.cc_java_swing.persistence;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.cejug.cc_java_swing.persistence.entity.Personagem;
@@ -32,6 +34,10 @@ public enum PersonagemPersistence {
         entityManager.getTransaction().begin();
         entityManager.persist(personagem);
         entityManager.getTransaction().commit();
+    }
+    
+    public List < Personagem > getPersonagens() {
+        return entityManager.createQuery("select p from Personagem p", Personagem.class).getResultList();
     }
 
 }
