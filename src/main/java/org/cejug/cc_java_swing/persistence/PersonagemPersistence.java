@@ -31,13 +31,42 @@ public enum PersonagemPersistence {
      * @param personagem Personagem
      */
     public void persist(Personagem personagem) {
+        // Inicia a transação.
         entityManager.getTransaction().begin();
+        // Persiste.
         entityManager.persist(personagem);
+        // Comita a transação.
         entityManager.getTransaction().commit();
     }
     
+    /**
+     * Remove um personagem no banco de dados.
+     * @param personagem Personagem
+     */
+    public void remove(Personagem personagem) {
+        // Inicia a transação.
+        entityManager.getTransaction().begin();
+        // Remove.
+        entityManager.remove(personagem);
+        // Comita a transação.
+        entityManager.getTransaction().commit();
+    }
+    
+    /**
+     * Lista todos os personagens cadastrados no banco de dados.
+     * @return List < Personagem >
+     */
     public List < Personagem > getPersonagens() {
         return entityManager.createQuery("select p from Personagem p", Personagem.class).getResultList();
+    }
+    
+    /**
+     * Busca um personagem pelo id.
+     * @param int id
+     * @return Personagem
+     */
+    public Personagem findById(int id) {
+        return entityManager.find(Personagem.class, id);
     }
 
 }

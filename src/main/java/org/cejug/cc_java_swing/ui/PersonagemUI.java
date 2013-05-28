@@ -1,15 +1,19 @@
 package org.cejug.cc_java_swing.ui;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 
 import org.cejug.cc_java_swing.persistence.PersonagemPersistence;
+import org.cejug.cc_java_swing.persistence.entity.Personagem;
 
 /**
  * Classe que irá conter o JFrame da aplicação.
@@ -53,7 +57,7 @@ public class PersonagemUI {
         jFrame.setResizable(false);
         
         // Cria objeto JTable.
-        JTable table = new JTable();
+        final JTable table = new JTable();
         
         // Cria objeto PersonagemTableModel.
         personagemTableModel = new PersonagemTableModel();
@@ -70,9 +74,37 @@ public class PersonagemUI {
         
         // Painel com os botões.
         JPanel painelBotoes = new JPanel();
+        
         painelBotoes.add(new JButton("Novo"));
         painelBotoes.add(new JButton("Alterar"));
-        painelBotoes.add(new JButton("Excluir"));
+        
+        
+        // Cria o botão com o texto excluir.
+        JButton excluir = new JButton("Excluir");
+        // Adiciona um listener para que esse botão possa efetuar uma ação.
+        excluir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                // Verifica se alguma linha da tabela foi selecionada.
+                if (table.getSelectedRow() >= 0) {
+                    // Obtém o personagem da linha selecionada.
+                    Personagem personagem = personagemTableModel.getPersonagemAt(table.getSelectedRow());
+                    // Remove o personagem do banco.
+                    PersonagemPersistence.INSTANCE.remove(personagem);
+                    // Obtém os personagens da base de dados e atualiza os personagens do tableModel.
+                    personagemTableModel.setPersonagens(PersonagemPersistence.INSTANCE.getPersonagens());
+                    // Liga o tableModel com o JTable.
+                    table.setModel(personagemTableModel);
+                    // Atualiza o componente visual.
+                    table.updateUI();
+                } else {
+                    // Mostra mensagem de atenção se nenhum registro foi selecionado.
+                    JOptionPane.showMessageDialog(null, "Selecione um registro.", "Atenção:", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+        // Adiciona o botão no painel.
+        painelBotoes.add(excluir);
         
         // Adiciona o scrollPane ( que contém a tabela ) dentro de uma aba JTabbedPane. 
         JTabbedPane aba = new JTabbedPane();

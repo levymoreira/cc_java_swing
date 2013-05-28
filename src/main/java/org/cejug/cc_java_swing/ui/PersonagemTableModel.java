@@ -73,11 +73,19 @@ public class PersonagemTableModel extends AbstractTableModel {
         }
     }
 
+    /**
+     * Atualiza a lista de pensonagens.
+     * @param personagens List < Personagem >
+     */
     public void setPersonagens(List < Personagem > personagens) {
         this.personagens = personagens;
-        //fireTableDataChanged();
     }
 
+    /**
+     * Retorna o Personagem da determinada linha selecionada.
+     * @param linha int
+     * @return Personagem
+     */
     public Personagem getPersonagemAt(int linha) {
         return personagens.get(linha);
     }
