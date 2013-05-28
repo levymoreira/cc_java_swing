@@ -75,8 +75,57 @@ public class PersonagemUI {
         // Painel com os botões.
         JPanel painelBotoes = new JPanel();
         
-        painelBotoes.add(new JButton("Novo"));
-        painelBotoes.add(new JButton("Alterar"));
+        // Cria o botão com o texto novo.
+        JButton novo = new JButton("Novo");
+        // Adiciona um listener para que esse botão possa efetuar uma ação.
+        novo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+            	String nome = JOptionPane.showInputDialog(null, "Qual o nome do personagem ?");
+            	Personagem personagem = new Personagem();
+            	personagem.setNome(nome);
+            	PersonagemPersistence.INSTANCE.persist(personagem);
+            	// Obtém os personagens da base de dados e atualiza os personagens do tableModel.
+                personagemTableModel.setPersonagens(PersonagemPersistence.INSTANCE.getPersonagens());
+                // Liga o tableModel com o JTable.
+                table.setModel(personagemTableModel);
+                // Atualiza o componente visual.
+                table.updateUI();
+            }
+        });
+        // Adiciona o botão no painel.
+        painelBotoes.add(novo);
+        
+        // Cria o botão com o texto Alterar.
+        JButton alterar = new JButton("Alterar");
+        // Adiciona um listener para que esse botão possa efetuar uma ação.
+        alterar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                // Verifica se alguma linha da tabela foi selecionada.
+                if (table.getSelectedRow() >= 0) {
+                    // Obtém o personagem da linha selecionada.
+                    Personagem personagem = personagemTableModel.getPersonagemAt(table.getSelectedRow());
+                    // Mostra um inputDialog com o nome do personagem selecionado.
+                    String nome = JOptionPane.showInputDialog(null, "Atualizar personagem:", personagem.getNome());
+                    // Atualiza o novo nome informado.
+                    personagem.setNome(nome);
+                    // Atualiza os dados do personagem do banco.
+                    PersonagemPersistence.INSTANCE.merge(personagem);
+                    // Obtém os personagens da base de dados e atualiza os personagens do tableModel.
+                    personagemTableModel.setPersonagens(PersonagemPersistence.INSTANCE.getPersonagens());
+                    // Liga o tableModel com o JTable.
+                    table.setModel(personagemTableModel);
+                    // Atualiza o componente visual.
+                    table.updateUI();
+                } else {
+                    // Mostra mensagem de atenção se nenhum registro foi selecionado.
+                    JOptionPane.showMessageDialog(null, "Selecione um registro.", "Atenção:", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+        // Adiciona o botão no painel.
+        painelBotoes.add(alterar);
         
         
         // Cria o botão com o texto excluir.

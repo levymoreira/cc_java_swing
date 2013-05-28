@@ -53,6 +53,19 @@ public enum PersonagemPersistence {
     }
     
     /**
+     * Atualiza um personagem no banco de dados.
+     * @param personagem Personagem
+     */
+    public void merge(Personagem personagem) {
+        // Inicia a transação.
+        entityManager.getTransaction().begin();
+        // Atualiza.
+        entityManager.merge(personagem);
+        // Comita a transação.
+        entityManager.getTransaction().commit();
+    }
+    
+    /**
      * Lista todos os personagens cadastrados no banco de dados.
      * @return List < Personagem >
      */
